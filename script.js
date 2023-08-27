@@ -86,15 +86,15 @@ function updateGraph(graphContainer, graphData) {
             .attr('y', d => d.y);
     });
 
-    const zoom = d3.zoom()
-        .scaleExtent([0.1, 10])
-        .on('zoom', zoomed);
+    // const zoom = d3.zoom()
+    //     .scaleExtent([0.1, 10])
+    //     .on('zoom', zoomed);
+    //
+    // svg.call(zoom);
 
-    svg.call(zoom);
-
-    function zoomed(event) {
-        container.attr('transform', event.transform);
-    }
+    // function zoomed(event) {
+    //     container.attr('transform', event.transform);
+    // }
 
     function dragStart(event, d) {
         if (!event.active) simulation.alphaTarget(0.3).restart();
