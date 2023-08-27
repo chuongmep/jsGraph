@@ -1,0 +1,51 @@
+/* Add some basic styling for the graph containers */
+.graph-container {
+    width: calc(20% - 20px);
+    height: 350px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: top;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #ccc;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 5px;
+    position: relative;
+}
+
+/* Style the button */
+#regenerateButton {
+    display: block;
+    margin-top: 20px;
+    height: 40px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border: 0;
+    background: #2196F3;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+@media (max-width: 850px) {
+    .graph-container {
+        width: 100%; /* Adjust width to 100% for responsiveness */
+        max-width: 400px; /* Limit maximum width for readability */
+        height: 300px; /* Set box height to 350px */
+        margin: 10px auto; /* Center align the graph containers */
+        border: 1px solid #ccc;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        box-shadow: 0 0 10px #ccc;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #regenerateButton {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
