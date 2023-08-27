@@ -1,9 +1,9 @@
 const roomData = [
-    { room: 'Living Room', adjacentRooms: ['Kitchen', 'Bedroom', 'Bathroom'] }, // Include Bathroom as an adjacent room
+    { room: 'Living Room', adjacentRooms: ['Kitchen', 'Bedroom', 'Bathroom'] },
     { room: 'Kitchen', adjacentRooms: ['Living Room', 'Dining Room'] },
     { room: 'Bedroom', adjacentRooms: ['Living Room'] },
     { room: 'Dining Room', adjacentRooms: ['Kitchen'] },
-    { room: 'Bathroom', adjacentRooms: ['Living Room'] } // Connect Bathroom to Living Room
+    { room: 'Bathroom', adjacentRooms: ['Living Room'] }
 ];
 
 const links = [];
@@ -25,11 +25,12 @@ function getRandomColor() {
     return color;
 }
 
-const width = 800;
-const height = 600;
+const svg = d3.select('#graph');
 
-const svg = d3.select('#graph')
-    .attr('width', width)
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+svg.attr('width', width)
     .attr('height', height);
 
 const simulation = d3.forceSimulation(nodes)
@@ -37,12 +38,20 @@ const simulation = d3.forceSimulation(nodes)
     .force('charge', d3.forceManyBody().strength(-200))
     .force('center', d3.forceCenter(width / 2, height / 2));
 
-const link = svg.selectAll('.link')
+const zoom = d3.zoom()
+    .scaleExtent([0.1, 10])
+    .on('zoom', zoomed);
+
+svg.call(zoom);
+
+const container = svg.append('g');
+
+const link = container.selectAll('.link')
     .data(links)
     .enter().append('line')
     .attr('class', 'link');
 
-const node = svg.selectAll('.node')
+const node = container.selectAll('.node')
     .data(nodes)
     .enter().append('circle')
     .attr('class', 'node')
@@ -53,7 +62,7 @@ const node = svg.selectAll('.node')
         .on('drag', dragging)
         .on('end', dragEnd));
 
-const labels = svg.selectAll('.label')
+const labels = container.selectAll('.label')
     .data(nodes)
     .enter().append('text')
     .attr('class', 'label')
@@ -76,6 +85,10 @@ simulation.on('tick', () => {
         .attr('x', d => d.x)
         .attr('y', d => d.y);
 });
+
+function zoomed(event) {
+    container.attr('transform', event.transform);
+}
 
 function dragStart(event, d) {
     if (!event.active) simulation.alphaTarget(0.3).restart();
