@@ -3,8 +3,10 @@ const roomData = [
     { room: 'Living Room', adjacentRooms: ['Kitchen', 'Bedroom', 'Bathroom'] },
     { room: 'Kitchen', adjacentRooms: ['Living Room', 'Dining Room'] },
     { room: 'Bedroom', adjacentRooms: ['Living Room'] },
-    { room: 'Dining Room', adjacentRooms: ['Kitchen'] },
-    { room: 'Bathroom', adjacentRooms: ['Living Room'] }
+    { room: 'Dining Room', adjacentRooms: ['Kitchen',] },
+    { room: 'Bathroom', adjacentRooms: ['Living Room'] },
+    { room: 'Office', adjacentRooms: ['Living Room'] },
+    { room: 'Garage', adjacentRooms: ['Kitchen'] },
 ];
 
 function getRandomColor() {
@@ -121,6 +123,25 @@ graphContainers.each(function(_, i) {
     updateGraph(graphContainer, graphData);
 });
 
+function generateRandomRoomData() {
+    const roomNames = ['Living Room', 'Kitchen', 'Bedroom', 'Dining Room', 'Bathroom', 'Office', 'Garage'];
+
+    const getRandomAdjacentRooms = () => {
+        const numAdjacent = Math.min(1, Math.floor(Math.random() * (roomNames.length - 1)) + 1);
+        const shuffledNames = roomNames.slice().sort(() => 0.5 - Math.random());
+        return shuffledNames.slice(0, numAdjacent);
+    };
+
+    const newRoomData = roomNames.map(roomName => {
+        const adjacentRooms = getRandomAdjacentRooms();
+        return {
+            room: roomName,
+            adjacentRooms: adjacentRooms.filter(adjRoom => adjRoom !== roomName) // Exclude the room itself
+        };
+    });
+
+    return newRoomData;
+}
 const regenerateButton = d3.select('#regenerateButton');
 
 regenerateButton.on('click', function() {
@@ -128,7 +149,8 @@ regenerateButton.on('click', function() {
 
     graphContainers.each(function(_, i) {
         const graphContainer = d3.select(this);
-        const graphData = roomData; // You can implement your own data generation logic here
-        updateGraph(graphContainer, graphData);
+
+        const newRoomData = generateRandomRoomData();
+        updateGraph(graphContainer, newRoomData);
     });
 });
