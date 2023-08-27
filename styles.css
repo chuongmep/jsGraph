@@ -29,6 +29,13 @@
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+#regenerateButton:hover {
+    background-color: #1079d2;
+}
+#regenerateButton:active {
+    transform: translate(0, 2px);
 }
 @media (max-width: 850px) {
     .graph-container {
